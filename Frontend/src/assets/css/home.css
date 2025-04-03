@@ -1,0 +1,12 @@
+.home {
+    text-align: center;
+    padding: 2rem;
+  }
+  
+  .events-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+  

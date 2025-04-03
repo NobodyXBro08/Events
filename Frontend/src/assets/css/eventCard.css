@@ -1,0 +1,26 @@
+.event-card {
+    border: 1px solid #ccc;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    width: 250px;
+    background-color: #fff;
+  }
+  
+  .event-card h3 {
+    color: #643b80;
+  }
+  
+  .event-card button {
+    background-color: #643b80;
+    color: white;
+    padding: 0.5rem;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .event-card button:disabled {
+    background-color: gray;
+  }
+  
