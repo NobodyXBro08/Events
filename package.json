@@ -1,4 +1,12 @@
 {
+  "name": "event-platform",
+  "version": "1.0.0",
+  "description": "Plataforma de eventos con autenticación y reservas",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node backend/src/server.js",
+    "dev": "nodemon backend/src/server.js"
+  },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
     "axios": "^1.8.4",
@@ -11,8 +19,5 @@
     "mongoose": "^8.13.1",
     "react-router-dom": "^7.4.1",
     "tailwindcss": "^4.1.2"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.9"
   }
 }
