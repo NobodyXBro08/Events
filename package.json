@@ -2,11 +2,11 @@
   "name": "event-platform",
   "version": "1.0.0",
   "description": "Plataforma de eventos con autenticación y reservas",
-  "main": "src/server.js",
+  "main": "src/server/server.js",
   "scripts": {
-    "start": "node backend/src/server.js",
-    "dev": "nodemon backend/src/server.js",
-    "build": "react-scripts build"
+    "start": "node src/server/server.js",
+    "dev": "nodemon src/server/server.js",
+    "build": "cd src/client && npm run build"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
@@ -16,8 +16,12 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^5.1.0",
+    "express-validator": "^7.2.1",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.13.1",
     "react-router-dom": "^7.4.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }

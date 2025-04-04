@@ -1,4 +1,4 @@
-const User = require('../models/user');
+const User = require('../../client/api/user');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
@@ -11,6 +11,16 @@ const registerUser = async (req, res) => {
     const { name, email, password } = req.body;
 
     try {
+        if (!name || !email || !password) {
+            return res.status(400).json({ message: 'Todos los campos son obligatorios' });
+        }
+
+        // Validar formato de correo
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({ message: 'Correo electrónico no válido' });
+        }
+
         const userExists = await User.findOne({ email });
 
         if (userExists) {
@@ -33,7 +43,7 @@ const registerUser = async (req, res) => {
             token: generateToken(user.id),
         });
     } catch (error) {
-        res.status(500).json({ message: 'Error en el registro' });
+        res.status(500).json({ message: 'Error en el registro', error: 'Hubo un problema al registrar el usuario' });
     }
 };
 
@@ -42,20 +52,30 @@ const loginUser = async (req, res) => {
     const { email, password } = req.body;
 
     try {
+        if (!email || !password) {
+            return res.status(400).json({ message: 'Correo y contraseña son requeridos' });
+        }
+
         const user = await User.findOne({ email });
 
-        if (user && (await user.matchPassword(password))) {
-            res.json({
-                _id: user.id,
-                name: user.name,
-                email: user.email,
-                token: generateToken(user.id),
-            });
-        } else {
-            res.status(401).json({ message: 'Credenciales inválidas' });
+        if (!user) {
+            return res.status(401).json({ message: 'Usuario no encontrado' });
         }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if (!isMatch) {
+            return res.status(401).json({ message: 'Contraseña incorrecta' });
+        }
+
+        res.json({
+            _id: user.id,
+            name: user.name,
+            email: user.email,
+            token: generateToken(user.id),
+        });
     } catch (error) {
-        res.status(500).json({ message: 'Error en el inicio de sesión' });
+        res.status(500).json({ message: 'Error en el inicio de sesión', error: 'Hubo un problema al iniciar sesión' });
     }
 };
 
